@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Our superheroes</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Faster+One" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+
+    </header>
+
+    <section>
+
+    </section>
+
+    <script>
+        const header = document.querySelector('header');
+        const section = document.querySelector('section');
+
+        let requestURL = 'https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json';
+        let request = new XMLHttpRequest();
+
+        request.open('GET', requestURL);
+        request.responseType = 'json';
+        //  sometimes we receive a raw JSON string, and we need to convert it to an object ourselves. 
+        // And when we want to send a JavaScript object across the network, we need to convert it to 
+        // JSON (a string) before sending. Luckily, these two problems are so common in web development
+        // that a built-in JSON object is available in browsers. Then we will use following line of code:
+        // request.responseType = 'text'; // getting a string
+        request.send();
+
+        request.onload = function () {
+            const superHeroes = request.response;
+            // const superHeroesText = request.response; // get the string from the response
+            // const superHeroesJson = JSON.stringify(superHeroesText); // convert it to an object
+            populateHeader(superHeroes);
+            showHeros(superHeroes);
+        }
+
+        function populateHeader(jsonObj) {
+            const myH1 = document.createElement('h1');
+            myH1.textContent = jsonObj['squadName'];
+            header.appendChild(myH1);
+
+            const myPara = document.createElement('p');
+            myPara.textContent = 'Hometown: ' + jsonObj['homeTown'] + '// Formed: ' + jsonObj['formed'];
+            header.appendChild(myPara);
+        }
+
+        function showHeros(jsonObj) {
+            const heroes = jsonObj['members'];
+
+            for (let i = 0; i < heroes.length; i++) {
+                const myArticle = document.createElement('article');
+                const myH2 = document.createElement('h2');
+                const myPara1 = document.createElement('p');
+                const myPara2 = document.createElement('p');
+                const myPara3 = document.createElement('p');
+                const myList = document.createElement('ul');
+
+                myH2.textContent = heroes[i].name;
+                myPara1.textContent = `Secret identity: ${heroes[i].secretIdentity}`;
+                myPara2.textContent = 'Age: ' + heroes[i].age;
+                myPara3.textContent = 'Superpowers: ';
+
+                const superPowers = heroes[i].powers;
+                for (let j = 0; j < superPowers.length; j++) {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = superPowers[j];
+                    myList.appendChild(listItem);
+                }
+
+                myArticle.appendChild(myH2);
+                myArticle.appendChild(myPara1);
+                myArticle.appendChild(myPara2);
+                myArticle.appendChild(myPara3);
+                myArticle.appendChild(myList);
+
+                section.appendChild(myArticle);
+            }
+        }
+
+    </script>
+</body>
+
+</html>

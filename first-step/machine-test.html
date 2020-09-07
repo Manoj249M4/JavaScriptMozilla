@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <title>Machine Test</title>
+  </head>
+  <body>
+    <button>Start Machine</button>
+    <p>The Machine is stopped!</p>
+  </body>
+</html>
+<script type="text/javascript">
+    const btn = document.querySelector('button');
+    const txt = document.querySelector('p');
+
+    btn.addEventListener('click',updateBtn);
+
+    function updateBtn(){
+        if (btn.textContent === 'Start Machine') {
+        btn.textContent = 'Stop Machine';
+        txt.textContent = 'The Machine has started!';
+    }else{
+        btn.textContent = 'Start Machine';
+        txt.textContent = 'The Machine is stopped!';
+    }
+}
+</script>

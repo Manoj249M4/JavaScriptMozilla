@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Object-oriented JavaScript example</title>
+</head>
+
+<body>
+    <p>This example requires you to enter commands in your browser's JavaScript console (see <a
+            href="https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_are_browser_developer_tools">What
+            are browser developer tools</a> for more information).</p>
+
+</body>
+
+<script>
+    const person = {
+        name: ['Manoj', 'Pandey'],
+        //name:{
+        //    first: 'Manoj',
+        //    last: 'Pandey'
+        //},
+        age: 28,
+        gender: 'male',
+        interests: ['music', 'gaming'],
+        bio: function () {
+            alert(`${this.name[0]} ${this.name[1]} is ${this.age} years old. He likes ${this.interests[0]} and ${this.interests[1]}.`);
+        },
+        greeting: function () {
+            alert(`Hi I'am ${this.name[0]}.`);
+        }
+    };
+
+    let bandInfo;
+
+    let band = {
+        name: 'Black Sabbath',
+        nationality: 'British',
+        genre: 'heavy metal',
+        members: 4,
+        formed: 1968,
+        split: 2017,
+        albums: [
+            {
+                name: 'Black Sabbath',
+                released: 1970
+            },
+            {
+                name: 'Paranoid',
+                released: 1970
+            },
+            {
+                name: 'Master of Reality',
+                released: 1971
+            },
+            {
+                name: 'Vol. 4',
+                released: 1972
+            }
+        ]
+    }
+
+    bandInfo = `The ${band.nationality} ${band.genre} band ${band.name} were active ${band.formed}–${band.split}. Their first album, ${band.albums[0].name}, was released in ${band.albums[0].released}.`;
+
+    let cat = {
+        name: 'Bertie',
+        breed: 'Cymric',
+        color: 'white',
+        greeting: function () {
+            console.log(`Hello, said ${this.name} the ${this.breed}.`);
+        }
+    }
+
+    let cat2 = {
+        name: 'Elfie',
+        breed: 'Aphrodite Giant',
+        color: 'ginger',
+        greeting: function () {
+            console.log(`Hello, said ${this.name} the ${this.breed}.`);
+        }
+    }
+
+    cat.greeting();
+    cat2.greeting();
+
+
+    function Person(first, last, age, gender, interests) {
+        this.name = {
+            'first': first,
+            'last': last
+        },
+            this.age = age;
+        this.gender = gender;
+        this.interests = interests;
+        this.bio = function () {
+            // First define a string, and make it equal to the part of
+            // the bio that we know will always be the same.
+            var string = this.name.first + ' ' + this.name.last + ' is ' + this.age + ' years old. ';
+            // define a variable that will contain the pronoun part of
+            // the second sentence
+            var pronoun;
+
+            // check what the value of gender is, and set pronoun
+            // to an appropriate value in each case
+            if (this.gender === 'male' || this.gender === 'Male' || this.gender === 'm' || this.gender === 'M') {
+                pronoun = 'He likes ';
+            } else if (this.gender === 'female' || this.gender === 'Female' || this.gender === 'f' || this.gender === 'F') {
+                pronoun = 'She likes ';
+            } else {
+                pronoun = 'They like ';
+            }
+
+            // add the pronoun string on to the end of the main string
+            string += pronoun;
+
+            // use another conditional to structure the last part of the
+            // second sentence depending on whether the number of interests
+            // is 1, 2, or 3
+            if (this.interests.length === 1) {
+                string += this.interests[0] + '.';
+            } else if (this.interests.length === 2) {
+                string += this.interests[0] + ' and ' + this.interests[1] + '.';
+            } else {
+                // if there are more than 2 interests, we loop through them
+                // all, adding each one to the main string followed by a comma,
+                // except for the last one, which needs an and & a full stop
+                for (var i = 0; i < this.interests.length; i++) {
+                    if (i === this.interests.length - 1) {
+                        string += 'and ' + this.interests[i] + '.';
+                    } else {
+                        string += this.interests[i] + ', ';
+                    }
+                }
+            }
+
+            // finally, with the string built, we alert() it
+            alert(string);
+        };
+        this.greeting = function () {
+            alert(`Hi I'am ${this.name.first}.`);
+        };
+    };
+
+    let person1 = new Person('Bob', 'Smith', 32, 'male', ['music', 'skiing', 'gaming']);
+    let person2 = new Person('Sarah', 'Jones', 23, 'female', ['music', 'skiing', 'gaming']);
+    person2['age']
+    person2.interests[1]
+    person2.bio()
+
+    // 1st Exercise
+    function Shape(name, sides, sideLength) {
+        this.name = name;
+        this.sides = sides;
+        this.sideLength = sideLength;
+    }
+
+    Shape.prototype.calcPerimeter = function () {
+        console.log(`The ${this.name}'s perimeter length is ${this.sides * this.sideLength}.`);
+    }
+
+    let square = new Shape('square', 4, 5);
+
+    square.calcPerimeter();
+
+    let triangle = new Shape('triangle', 3, 3);
+
+    triangle.calcPerimeter();
+
+    //2nd Exercise
+    class Shape1 {
+        constructor(name, sides, sideLength) {
+            this.name = name;
+            this.sides = sides;
+            this.sideLength = sideLength;
+        }
+        calcPerimeter() {
+            console.log(`The ${this.name}'s perimeter length is ${this.sides * this.sideLength}.`);
+        };
+    }
+    let square1 = new Shape1('square', 4, 5);
+    let triangle1 = new Shape1('triangle', 3, 3);
+
+    square1.calcPerimeter();
+    triangle1.calcPerimeter();
+
+    // 3rd Exercise
+    class Square extends Shape1 {
+        constructor(sideLength) {
+            super('square', 4, sideLength);
+        }
+        calcArea() {
+            console.log(`The ${this.name}'s area is ${this.sideLength * this.sideLength} squared.`);
+        };
+    }
+
+    let square2 = new Square(4);
+
+    square2.calcPerimeter();
+    square2.calcArea();
+
+    // Inheritance in javaScript
+    function Teacher(first, last, age, gender, interests, subject) {
+        Person.call(this, first, last, age, gender, interests);
+        this.subject = subject;
+    }
+    Teacher.prototype = Object.create(Person.prototype); //The new object has Person.prototype as its prototype and will therefore inherit, if and when needed, all the methods available on Person.prototype.
+
+    Teacher.prototype.greeting = function () {
+        let prefix;
+
+        if (this.gender === 'male' || this.gender === 'Male' || this.gender === 'm' || this.gender === 'M') {
+            prefix = 'Mr.';
+        } else if (this.gender === 'female' || this.gender === 'Female' || this.gender === 'f' || this.gender === 'F') {
+            prefix = 'Ms.';
+        } else {
+            prefix = 'Mx.';
+        }
+
+        alert('Hello. My name is ' + prefix + ' ' + this.name.last + ', and I teach ' + this.subject + '.');
+    };
+
+    Object.defineProperty(Teacher.prototype, 'constructor', {
+        value: Teacher,
+        enumerable: false, // so that it does not appear in 'for in' loop
+        writable: true
+    });
+
+    let teacher1 = new Teacher('Dave', 'Griffiths', 31, 'male', ['football', 'cookery'], 'mathematics');
+
+    // Student Class
+    function Student(first, last, age, gender, interests) {
+        Person.call(this, first, last, age, gender, interests);
+    }
+
+    Student.prototype = Object.create(Person.prototype);
+    Student.prototype.constructor = Student;
+
+    Student.prototype.greeting = function () {
+
+        alert('Yo! I\'m ' + this.name.first + '.');
+    };
+
+    let student1 = new Student('Liz', 'Sheppard', 17, 'female', ['ninjitsu', 'air cadets']);
+</script>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Cat family info</title>
+
+</head>
+
+<body>
+    <section class="preview"></section>
+</body>
+<script>
+    let section = document.querySelector('.preview');
+    let para1 = document.createElement('p');
+    let para2 = document.createElement('p');
+
+    let motherInfo = 'The mother cats are called ';
+    let kittenInfo;
+    // let requestURL = 'https://github.com/mdn/learning-area/blob/master/javascript/oojs/tasks/json/sample.json';
+    // let request = new XMLHttpRequest();
+
+    // request.open('GET', requestURL);
+    // request.responseType = 'text';
+
+    // request.send();
+
+    // request.onload = function () {
+    //    const catInfo = request.response;
+    //    const catInfoJson = JSON.stringify(catInfo);
+    //    displayCatInfo(catInfoJson)
+    // }
+
+    fetch('https://cors-anywhere.herokuapp.com/https://github.com/mdn/learning-area/blob/master/javascript/oojs/tasks/json/sample.json')
+        .then(response => response.text())
+        .then(text => displayCatInfo(text))
+
+    function displayCatInfo(catString) {
+        let total = 0;
+        let male = 0;
+
+        // Add your code here
+
+        let cats = JSON.parse(catString);
+
+        for (let i = 0; i < cats.length; i++) {
+            for (let j = 0; j < cats[i].kittens.length; j++) {
+                total++;
+                if (cats[i].kittens[j].gender === 'm') {
+                    male++;
+                }
+            }
+
+            if (i < (cats.length - 1)) {
+                motherInfo += `${cats[i].name}, `;
+            } else {
+                motherInfo += `and ${cats[i].name}.`;
+            }
+        }
+
+        kittenInfo = `There are ${total} kittens in total, ${male} males and ${total - male} females.`;
+
+        // Don't edit the code below here!
+
+        para1.textContent = motherInfo;
+        para2.textContent = kittenInfo;
+    }
+
+</script>
+
+</html>
